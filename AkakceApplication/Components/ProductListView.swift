@@ -24,7 +24,7 @@ class ProductListView: UIView {
         layout.minimumInteritemSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         layout.estimatedItemSize = .zero
-        layout.itemSize = CGSize(width: (UIScreen.main.bounds.width - 30) / 2, height: 200)
+        layout.itemSize = CGSize(width: (UIScreen.main.bounds.width - 30) / 2, height: 250)
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear

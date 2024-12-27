@@ -101,7 +101,7 @@ class HomeViewController: UIViewController, ProductListViewDelegate {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let fetchedProducts):
-                    print("Products List başarıyla çekildi: \(fetchedProducts.count) adet")
+                    print("Products List başarıyla çekildi: \(fetchedProducts.count) ")
                     self?.products = fetchedProducts
                     self?.productListView.updateProducts(fetchedProducts) // Products List güncelle
                     

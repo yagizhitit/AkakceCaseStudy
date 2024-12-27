@@ -108,7 +108,7 @@ class ProductListCell: UICollectionViewCell {
         nameLabel.text = product.title
         priceLabel.text = "\(String(product.price)) TL"
         ratingCountLabel.text = "\(product.rating.count) kişi değerlendirdi"
-        rate.text = "\(product.rating.rate) puan"
+        rate.text = "★\(product.rating.rate) puan"
         
         productImageView.image = nil
         productImageView.loadImage(from: product.image)

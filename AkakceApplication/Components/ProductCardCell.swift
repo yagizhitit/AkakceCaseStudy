@@ -44,7 +44,7 @@ class ProductCardCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     private let rate: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
@@ -117,7 +117,7 @@ class ProductCardCell: UICollectionViewCell {
         productNameLabel.text = product.title
         priceLabel.text = "\(String(product.price)) TL"
         ratingCountLabel.text = "\(product.rating.count) kişi değerlendirdi"
-        rate.text = "\(product.rating.rate) puan"
+        rate.text = "★\(product.rating.rate) puan"
         
         productImageView.image = nil
         productImageView.loadImage(from: product.image)
