@@ -9,13 +9,14 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    // MARK: - Properties
-    private let products: [Product] = [
-        Product(name: "iPhone 13 128 GB", price: "20.567.00 TL", sellerCount: "131 satıcı >", followerCount: "3.000+ takip", imageName: "iphone13_image"),
-        Product(name: "Samsung Galaxy S23", price: "25.499.00 TL", sellerCount: "120 satıcı >", followerCount: "4.500+ takip", imageName: "iphone13_image"),
-        Product(name: "Xiaomi Mi 12", price: "18.299.00 TL", sellerCount: "98 satıcı >", followerCount: "2.800+ takip", imageName: "iphone13_image"),
-        Product(name: "OnePlus 11", price: "22.999.00 TL", sellerCount: "85 satıcı >", followerCount: "3.200+ takip", imageName: "iphone13_image")
-    ]
+    private var products: [Product] = []
+    
+//    private let products: [Product] = [
+//        Product(name: "iPhone 13 128 GB", price: "20.567.00 TL", sellerCount: "131 satıcı >", followerCount: "3.000+ takip", imageName: "iphone13_image"),
+//        Product(name: "Samsung Galaxy S23", price: "25.499.00 TL", sellerCount: "120 satıcı >", followerCount: "4.500+ takip", imageName: "iphone13_image"),
+//        Product(name: "Xiaomi Mi 12", price: "18.299.00 TL", sellerCount: "98 satıcı >", followerCount: "2.800+ takip", imageName: "iphone13_image"),
+//        Product(name: "OnePlus 11", price: "22.999.00 TL", sellerCount: "85 satıcı >", followerCount: "3.200+ takip", imageName: "iphone13_image")
+//    ]
     
     private lazy var cardCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -60,15 +61,43 @@ class HomeViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        print("ProductListView frame: \(productListView.frame)")
+    }
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
         setUpNavigationBar()
+        cardCollectionView.register(ProductCardCell.self, forCellWithReuseIdentifier: ProductCardCell.identifier)
         setupViews()
+        fetchProducts()
     }
     
     // MARK: - Setup Methods
+    private func fetchProducts() {
+        NetworkManager.shared.fetchProducts { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let fetchedProducts):
+                    print("Ürünler başarıyla çekildi: \(fetchedProducts.count) adet")
+                    self?.products = fetchedProducts
+                    
+                    // CardView'i güncelle
+                    self?.cardCollectionView.reloadData()
+                    
+                    // ProductListView'i güncelle
+                    self?.productListView.updateProducts(fetchedProducts)
+                    
+                case .failure(let error):
+                    print("Ürünler alınamadı: \(error)")
+                }
+            }
+        }
+    }
+    
     private func setupViews() {
         view.addSubview(cardCollectionView)
         view.addSubview(pageControl)
@@ -125,16 +154,22 @@ class HomeViewController: UIViewController {
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("Ürün sayısı: \(products.count)") // Debug için
         return products.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCardCell.identifier, for: indexPath) as? ProductCardCell else {
-            fatalError("Unable to dequeue ProductCardCell")
+        if collectionView == cardCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCardCell.identifier, for: indexPath) as! ProductCardCell
+            let product = products[indexPath.row]
+            cell.configure(with: product)
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductListCell.identifier, for: indexPath) as! ProductListCell
+            let product = products[indexPath.row]
+            cell.configure(with: product)
+            return cell
         }
-        let product = products[indexPath.row]
-        cell.configure(with: product)
-        return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

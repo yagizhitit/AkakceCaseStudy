@@ -37,7 +37,7 @@ class ProductCardCell: UICollectionViewCell {
         return label
     }()
 
-    private let sellerCountLabel: UILabel = {
+    private let ratingCountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .gray
@@ -45,7 +45,7 @@ class ProductCardCell: UICollectionViewCell {
         return label
     }()
 
-    private let followerCountLabel: UILabel = {
+    private let rate: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .gray
@@ -63,8 +63,8 @@ class ProductCardCell: UICollectionViewCell {
         contentView.addSubview(productImageView)
         contentView.addSubview(productNameLabel)
         contentView.addSubview(priceLabel)
-        contentView.addSubview(sellerCountLabel)
-        contentView.addSubview(followerCountLabel)
+        contentView.addSubview(ratingCountLabel)
+        contentView.addSubview(rate)
 
         setupConstraints()
     }
@@ -72,6 +72,7 @@ class ProductCardCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 
     // MARK: - Setup Constraints
     private func setupConstraints() {
@@ -92,21 +93,22 @@ class ProductCardCell: UICollectionViewCell {
             priceLabel.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 10),
 
             // Seller Count Label
-            sellerCountLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 5),
-            sellerCountLabel.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 10),
+            ratingCountLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 5),
+            ratingCountLabel.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 10),
 
             // Follower Count Label
-            followerCountLabel.topAnchor.constraint(equalTo: sellerCountLabel.bottomAnchor, constant: 5),
-            followerCountLabel.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 10)
+            rate.topAnchor.constraint(equalTo: ratingCountLabel.bottomAnchor, constant: 5),
+            rate.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 10)
         ])
     }
 
     // MARK: - Configure Cell
     func configure(with product: Product) {
-        productNameLabel.text = product.name
-        priceLabel.text = product.price
-        sellerCountLabel.text = product.sellerCount
-        followerCountLabel.text = product.followerCount
-        productImageView.image = UIImage(named: product.imageName)
+        print("Ürün adı: \(product.title)") 
+        productImageView.loadImage(from: product.image)
+        productNameLabel.text = product.title
+        priceLabel.text = String(product.price)
+        ratingCountLabel.text = "\(product.rating.count)"
+        rate.text = "\(product.rating.rate)"
     }
 }

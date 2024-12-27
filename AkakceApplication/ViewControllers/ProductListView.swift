@@ -10,7 +10,7 @@ import UIKit
 class ProductListView: UIView {
 
     // MARK: - Properties
-    private let products: [Product]
+    private var products: [Product] = []
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -32,6 +32,7 @@ class ProductListView: UIView {
     init(products: [Product]) {
         self.products = products
         super.init(frame: .zero)
+        self.backgroundColor = .systemGray5
         setupCollectionView()
     }
 
@@ -51,19 +52,28 @@ class ProductListView: UIView {
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
+    
+    func reloadData() {
+        collectionView.reloadData() // İçteki UICollectionView'i günceller
+    }
+    
+    func updateProducts(_ newProducts: [Product]) {
+            self.products = newProducts // Yeni ürünleri ata
+            collectionView.reloadData() // CollectionView'i güncelle
+        }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 extension ProductListView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("ProductListView ürün sayısı: \(products.count)") // Debug için
         return products.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductListCell.identifier, for: indexPath) as? ProductListCell else {
-            fatalError("Unable to dequeue ProductListCell")
-        }
+        print("ProductListView hücre oluşturuluyor: \(products[indexPath.row].title)") // Debug için
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductListCell.identifier, for: indexPath) as! ProductListCell
         let product = products[indexPath.row]
         cell.configure(with: product)
         return cell

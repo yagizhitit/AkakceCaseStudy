@@ -38,7 +38,7 @@ class ProductListCell: UICollectionViewCell {
         return label
     }()
 
-    private let sellerLabel: UILabel = {
+    private let ratingCountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .darkGray
@@ -46,7 +46,7 @@ class ProductListCell: UICollectionViewCell {
         return label
     }()
 
-    private let followerLabel: UILabel = {
+    private let rate: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .darkGray
@@ -75,7 +75,7 @@ class ProductListCell: UICollectionViewCell {
         contentView.layer.shadowRadius = 4
         contentView.layer.masksToBounds = false
 
-        let stackView = UIStackView(arrangedSubviews: [productImageView, nameLabel, priceLabel, sellerLabel, followerLabel])
+        let stackView = UIStackView(arrangedSubviews: [productImageView, nameLabel, priceLabel, ratingCountLabel, rate])
         stackView.axis = .vertical
         stackView.spacing = 4
         stackView.alignment = .leading
@@ -94,10 +94,11 @@ class ProductListCell: UICollectionViewCell {
 
     // MARK: - Configure Cell
     func configure(with product: Product) {
-        productImageView.image = UIImage(named: product.imageName)
-        nameLabel.text = product.name
-        priceLabel.text = product.price
-        sellerLabel.text = product.sellerCount
-        followerLabel.text = product.followerCount
+        print("Ürün adı: \(product.title)") 
+        productImageView.loadImage(from: product.image)
+        nameLabel.text = product.title
+        priceLabel.text = String(product.price)
+        ratingCountLabel.text = "\(product.rating.count)"
+        rate.text = "\(product.rating.rate)"
     }
 }
