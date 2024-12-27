@@ -7,10 +7,12 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, ProductListViewDelegate {
     
     private var horizontalProducts: [Product] = []
     private var products: [Product] = []
+    
+    private var productListView: ProductListView = ProductListView(products: [])
     
     private lazy var cardCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -43,7 +45,6 @@ class HomeViewController: UIViewController {
         return pageControl
     }()
     
-    private let productListView: ProductListView
     
     // MARK: - Initializer
     init() {
@@ -63,6 +64,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
+        productListView.delegate = self
         setUpNavigationBar()
         cardCollectionView.register(ProductCardCell.self, forCellWithReuseIdentifier: ProductCardCell.identifier)
         setupViews()
@@ -86,7 +88,7 @@ class HomeViewController: UIViewController {
                     self?.pageControl.numberOfPages = fetchedHorizontalProducts.count
                     self?.pageControl.currentPage = 0
                     
-                    self?.cardCollectionView.reloadData() // CardView güncelle
+                    self?.cardCollectionView.reloadData() // updating Cardview
                     
                 case .failure(let error):
                     print("Horizontal Products alınamadı: \(error)")
@@ -187,6 +189,28 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             cell.configure(with: product)
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedProduct: Product
+        
+        if collectionView == cardCollectionView {
+            selectedProduct = horizontalProducts[indexPath.row] // Horizontal Products
+        } else {
+            selectedProduct = products[indexPath.row] // Products List
+        }
+        
+        // Detailed Page Routing
+        let detailVC = ProductDetailViewController()
+        detailVC.productId = selectedProduct.id // Tıklanan ürünün IDsini gönderir
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func productListView(_ productListView: ProductListView, didSelectProduct product: Product) {
+        // Ürün detay sayfasına yönlendirme
+        let detailVC = ProductDetailViewController()
+        detailVC.productId = product.id // Tıklanan ürünün ID'sini gönder
+        navigationController?.pushViewController(detailVC, animated: true)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

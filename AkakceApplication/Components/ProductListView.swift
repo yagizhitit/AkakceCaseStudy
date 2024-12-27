@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol ProductListViewDelegate: AnyObject {
+    func productListView(_ productListView: ProductListView, didSelectProduct product: Product)
+}
+
 class ProductListView: UIView {
 
     // MARK: - Properties
     private var products: [Product] = []
+    weak var delegate: ProductListViewDelegate?
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -54,7 +59,7 @@ class ProductListView: UIView {
     }
     
     func reloadData() {
-        collectionView.reloadData() // İçteki UICollectionView'i günceller
+        collectionView.reloadData() // İçteki UICollectionViewi günceller
     }
     
     func updateProducts(_ newProducts: [Product]) {
@@ -75,5 +80,10 @@ extension ProductListView: UICollectionViewDataSource, UICollectionViewDelegateF
         let product = products[indexPath.row]
         cell.configure(with: product)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedProduct = products[indexPath.row]
+        delegate?.productListView(self, didSelectProduct: selectedProduct) // Delegate'e ilet
     }
 }
