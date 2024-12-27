@@ -31,18 +31,20 @@ This project is an e-commerce application developed entirely programmatically us
 
 ## How It Works 📱
 
-    ###1. Home Screen:
+    1. Home Screen:
     - Browse products in horizontal and vertical lists.
     - Horizontal list is limited to 5 products.
     - Vertical list displays products in a grid layout.
-    ###2. Clicking on a Product:
+    2. Clicking on a Product:
     - Opens the product detail page.
-    ###3. Product Detail Page:
+    3. Product Detail Page:
     - View product category, price, description, and rating.
     - Star rating is dynamically filled based on the product’s rating value.
     
 ## Screenshots 📸
 
 ### Home Screen
+(https://github.com/yagizhitit/AkakceCaseStudy/blob/main/AkakceApplication/Screenshots/detailPage_ss.png)
 
 ### Product Detail Page
+(https://github.com/yagizhitit/AkakceCaseStudy/blob/main/AkakceApplication/Screenshots/homePage_ss.png)
