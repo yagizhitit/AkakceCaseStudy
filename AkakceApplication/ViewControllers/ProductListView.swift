@@ -15,9 +15,10 @@ class ProductListView: UIView {
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 10 // Satırlar arası boşluk
-        layout.minimumInteritemSpacing = 10 // Sütunlar arası boşluk
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) // Kenar boşlukları
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.estimatedItemSize = .zero
         layout.itemSize = CGSize(width: (UIScreen.main.bounds.width - 30) / 2, height: 200)
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -32,7 +33,6 @@ class ProductListView: UIView {
     init(products: [Product]) {
         self.products = products
         super.init(frame: .zero)
-        self.backgroundColor = .systemGray5
         setupCollectionView()
     }
 
@@ -58,8 +58,8 @@ class ProductListView: UIView {
     }
     
     func updateProducts(_ newProducts: [Product]) {
-            self.products = newProducts // Yeni ürünleri ata
-            collectionView.reloadData() // CollectionView'i güncelle
+            self.products = newProducts
+            collectionView.reloadData()
         }
 }
 
@@ -67,12 +67,10 @@ class ProductListView: UIView {
 extension ProductListView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("ProductListView ürün sayısı: \(products.count)") // Debug için
         return products.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("ProductListView hücre oluşturuluyor: \(products[indexPath.row].title)") // Debug için
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductListCell.identifier, for: indexPath) as! ProductListCell
         let product = products[indexPath.row]
         cell.configure(with: product)

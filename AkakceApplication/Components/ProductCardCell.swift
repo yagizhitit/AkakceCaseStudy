@@ -73,6 +73,14 @@ class ProductCardCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        productImageView.image = nil // Görseli sıfırla
+        productNameLabel.text = nil // Başlığı sıfırla
+        priceLabel.text = nil // Fiyatı sıfırla
+        ratingCountLabel.text = nil // Satıcı sayısını sıfırla
+        rate.text = nil // Takipçi sayısını sıfırla
+    }
 
     // MARK: - Setup Constraints
     private func setupConstraints() {
@@ -107,8 +115,11 @@ class ProductCardCell: UICollectionViewCell {
         print("Ürün adı: \(product.title)") 
         productImageView.loadImage(from: product.image)
         productNameLabel.text = product.title
-        priceLabel.text = String(product.price)
-        ratingCountLabel.text = "\(product.rating.count)"
-        rate.text = "\(product.rating.rate)"
+        priceLabel.text = "\(String(product.price)) TL"
+        ratingCountLabel.text = "\(product.rating.count) kişi değerlendirdi"
+        rate.text = "\(product.rating.rate) puan"
+        
+        productImageView.image = nil
+        productImageView.loadImage(from: product.image)
     }
 }
