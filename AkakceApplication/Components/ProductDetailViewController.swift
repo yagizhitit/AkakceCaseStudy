@@ -139,6 +139,7 @@ class ProductDetailViewController: UIViewController {
                 let product = try JSONDecoder().decode(Product.self, from: data)
                 DispatchQueue.main.async {
                     self?.updateUI(with: product)
+                    print(urlString)
                 }
             } catch {
                 print("Ürün detayları alınamadı: \(error)")
@@ -156,7 +157,6 @@ class ProductDetailViewController: UIViewController {
         descriptionLabel.text = product.description
         
         // Filling the stars 
-        
         for (index, view) in ratingStackView.arrangedSubviews.enumerated() {
             if let starImageView = view as? UIImageView {
                 starImageView.tintColor = index <= Int(product.rating.rate.rounded()) ? .systemYellow : .lightGray

@@ -44,7 +44,10 @@ This project is an e-commerce application developed entirely programmatically us
 ## Screenshots 📸
 
 ### Home Screen
-(https://github.com/yagizhitit/AkakceCaseStudy/blob/main/AkakceApplication/Screenshots/detailPage_ss.png)
+
+![DetaılPage Screenshot](https://github.com/yagizhitit/AkakceCaseStudy/blob/main/AkakceApplication/Screenshots/homePage_ss.png?raw=true)
 
 ### Product Detail Page
-(https://github.com/yagizhitit/AkakceCaseStudy/blob/main/AkakceApplication/Screenshots/homePage_ss.png)
+
+![HomePage Screenshot](https://github.com/yagizhitit/AkakceCaseStudy/blob/main/AkakceApplication/Screenshots/detailPage_ss.png?raw=true)
+

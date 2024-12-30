@@ -75,11 +75,11 @@ class ProductCardCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        productImageView.image = nil // Görseli sıfırla
-        productNameLabel.text = nil // Başlığı sıfırla
-        priceLabel.text = nil // Fiyatı sıfırla
-        ratingCountLabel.text = nil // Satıcı sayısını sıfırla
-        rate.text = nil // Takipçi sayısını sıfırla
+        productImageView.image = nil
+        productNameLabel.text = nil
+        priceLabel.text = nil
+        ratingCountLabel.text = nil
+        rate.text = nil
     }
 
     // MARK: - Setup Constraints

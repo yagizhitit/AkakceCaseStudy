@@ -146,24 +146,7 @@ class HomeViewController: UIViewController, ProductListViewDelegate {
     }
     
     private func setUpNavigationBar() {
-        let menuButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3"), style: .plain, target: nil, action: nil)
-        menuButton.tintColor = .label
-        
-        let logoImageView = UIImageView(image: UIImage(named: "akakceLogo"))
-        logoImageView.contentMode = .scaleAspectFit
-        logoImageView.frame = CGRect(x: 0, y: 0, width: 80, height: 20)
-        navigationItem.titleView = logoImageView
-        
-        let userButton = UIButton(type: .system)
-        userButton.setTitle("YH", for: .normal)
-        userButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        userButton.setTitleColor(.white, for: .normal)
-        userButton.backgroundColor = .black
-        userButton.layer.cornerRadius = 18
-        userButton.clipsToBounds = true
-        userButton.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: userButton)
-        navigationItem.leftBarButtonItem = menuButton
+        setupNavigationBar(userInitials: "AZ")
     }
 }
 
@@ -202,19 +185,19 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         
         // Detailed Page Routing
         let detailVC = ProductDetailViewController()
-        detailVC.productId = selectedProduct.id // Tıklanan ürünün IDsini gönderir
+        detailVC.productId = selectedProduct.id
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
     func productListView(_ productListView: ProductListView, didSelectProduct product: Product) {
-        // Ürün detay sayfasına yönlendirme
+        // Ürün detay sayfasına yönlendirir
         let detailVC = ProductDetailViewController()
         detailVC.productId = product.id // Tıklanan ürünün ID'sini gönder
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard scrollView == cardCollectionView else { return } // Sadece CardView için çalıştır
+        guard scrollView == cardCollectionView else { return }
         
         let pageWidth = scrollView.frame.width
         guard pageWidth > 0 else {
@@ -228,8 +211,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             return
         }
         
-        // Geçerli değerlere sahipsen, pageIndex'i hesapla
         let pageIndex = Int((contentOffsetX + pageWidth / 2) / pageWidth)
-        pageControl.currentPage = pageIndex // PageControl'ü güncelle
+        pageControl.currentPage = pageIndex
     }
 }

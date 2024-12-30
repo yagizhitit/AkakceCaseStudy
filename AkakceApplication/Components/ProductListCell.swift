@@ -66,11 +66,11 @@ class ProductListCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        productImageView.image = nil // Görseli sıfırla
-        nameLabel.text = nil // Başlığı sıfırla
-        priceLabel.text = nil // Fiyatı sıfırla
-        ratingCountLabel.text = nil // Satıcı sayısını sıfırla
-        rate.text = nil // Takipçi sayısını sıfırla
+        productImageView.image = nil
+        nameLabel.text = nil
+        priceLabel.text = nil
+        ratingCountLabel.text = nil
+        rate.text = nil
     }
 
     // MARK: - Setup Views

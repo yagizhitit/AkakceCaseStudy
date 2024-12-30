@@ -84,6 +84,6 @@ extension ProductListView: UICollectionViewDataSource, UICollectionViewDelegateF
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedProduct = products[indexPath.row]
-        delegate?.productListView(self, didSelectProduct: selectedProduct) // Delegate'e ilet
+        delegate?.productListView(self, didSelectProduct: selectedProduct)
     }
 }
